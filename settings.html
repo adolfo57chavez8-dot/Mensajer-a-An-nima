@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Configuración — Mensajería Anónima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div id="loading" class="full-loading"><div class="loading-spinner"></div></div>
+
+<div class="app-shell" id="content" style="display:none;">
+  <div class="topbar"><h2 style="margin:0;">Configuración</h2></div>
+
+  <div class="section-title">Preferencias</div>
+  <div class="card settings-group">
+    <div class="settings-row">
+      <div>
+        <div class="settings-row-label">Notificaciones por correo</div>
+        <div class="settings-row-desc">Recibe un correo cuando llegue un mensaje nuevo</div>
+      </div>
+      <label class="switch"><input type="checkbox" id="toggle-email-notif" /><span class="switch-track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">Apariencia</div>
+      <select id="appearance-select" style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:8px; color:var(--text); padding:8px 10px;">
+        <option value="dark">Oscuro</option>
+        <option value="light">Claro</option>
+        <option value="auto">Automático</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="section-title">Seguridad</div>
+  <div class="card settings-group">
+    <div class="settings-row" style="cursor:pointer;" id="open-hidden-words">
+      <div class="settings-row-label">Palabras ocultas</div>
+      <span class="pill" id="hidden-words-count">0</span>
+    </div>
+    <div class="settings-row" style="cursor:pointer;" id="open-blocked-users">
+      <div class="settings-row-label">Usuarios bloqueados</div>
+      <span class="pill" id="blocked-users-count">0</span>
+    </div>
+    <div class="settings-row">
+      <div>
+        <div class="settings-row-label">Pausar mi enlace</div>
+        <div class="settings-row-desc">Nadie podrá enviarte mensajes mientras esté pausado</div>
+      </div>
+      <label class="switch"><input type="checkbox" id="toggle-link-paused" /><span class="switch-track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div>
+        <div class="settings-row-label">Filtrado de mensajes</div>
+        <div class="settings-row-desc">Bloquea automáticamente tus palabras ocultas</div>
+      </div>
+      <label class="switch"><input type="checkbox" id="toggle-filtering" /><span class="switch-track"></span></label>
+    </div>
+    <div class="settings-row" style="cursor:pointer;" id="open-change-password">
+      <div class="settings-row-label">Cambiar contraseña</div>
+      <span>›</span>
+    </div>
+  </div>
+
+  <div class="section-title">Cuenta</div>
+  <div class="card settings-group">
+    <div class="field" style="margin-bottom:12px;">
+      <label for="edit-full-name">Nombre completo</label>
+      <input type="text" id="edit-full-name" />
+    </div>
+    <div class="field" style="margin-bottom:12px;">
+      <label for="edit-username">Nombre de usuario</label>
+      <input type="text" id="edit-username" />
+      <div class="field-error" id="error-edit-username"></div>
+    </div>
+    <div class="field" style="margin-bottom:4px;">
+      <label>Correo electrónico</label>
+      <input type="email" id="account-email" disabled />
+    </div>
+    <button class="btn btn-secondary btn-sm" id="save-account-btn" style="margin-top:10px;">Guardar cambios</button>
+  </div>
+  <div class="card settings-group">
+    <div class="settings-row" style="cursor:pointer;" id="logout-btn">
+      <div class="settings-row-label">Cerrar sesión</div>
+    </div>
+    <div class="settings-row" style="cursor:pointer;" id="delete-account-btn">
+      <div class="settings-row-label" style="color:var(--danger);">Eliminar cuenta</div>
+    </div>
+  </div>
+
+  <div class="section-title">Información</div>
+  <div class="card settings-group">
+    <div class="settings-row"><a href="#" class="settings-row-label" style="color:var(--text);">Ayuda</a></div>
+    <div class="settings-row"><a href="#" class="settings-row-label" style="color:var(--text);">Recursos de seguridad</a></div>
+    <div class="settings-row"><a href="#" class="settings-row-label" style="color:var(--text);">Términos de uso</a></div>
+    <div class="settings-row"><a href="#" class="settings-row-label" style="color:var(--text);">Política de privacidad</a></div>
+    <div class="settings-row"><a href="#" class="settings-row-label" style="color:var(--text);">Licencias</a></div>
+  </div>
+</div>
+
+<!-- Modal: palabras ocultas -->
+<div class="modal-overlay" id="hidden-words-modal">
+  <div class="modal">
+    <h3>Palabras ocultas</h3>
+    <p>Los mensajes que contengan estas palabras serán filtrados.</p>
+    <div style="display:flex; gap:8px; margin-bottom:14px;">
+      <input type="text" id="new-hidden-word" placeholder="Agregar palabra..." style="flex:1; background:var(--bg-elevated); border:1px solid var(--border); border-radius:10px; padding:11px 12px; color:var(--text);" />
+      <button class="btn btn-primary btn-sm" id="add-hidden-word-btn">Agregar</button>
+    </div>
+    <div id="hidden-words-chips"></div>
+    <button class="btn btn-secondary" id="close-hidden-words-modal" style="margin-top:16px;">Cerrar</button>
+  </div>
+</div>
+
+<!-- Modal: usuarios bloqueados -->
+<div class="modal-overlay" id="blocked-users-modal">
+  <div class="modal">
+    <h3>Usuarios bloqueados</h3>
+    <div id="blocked-users-list"></div>
+    <button class="btn btn-secondary" id="close-blocked-modal" style="margin-top:16px;">Cerrar</button>
+  </div>
+</div>
+
+<!-- Modal: cambiar contraseña -->
+<div class="modal-overlay" id="change-password-modal">
+  <div class="modal">
+    <h3>Cambiar contraseña</h3>
+    <form id="change-password-form" novalidate>
+      <div class="field">
+        <label for="cp-new">Nueva contraseña</label>
+        <input type="password" id="cp-new" />
+        <div class="field-error" id="error-cp-new"></div>
+      </div>
+      <div class="field">
+        <label for="cp-confirm">Confirmar contraseña</label>
+        <input type="password" id="cp-confirm" />
+        <div class="field-error" id="error-cp-confirm"></div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="btn btn-ghost" id="close-change-password-modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/settings.js"></script>
+</body>
+</html>

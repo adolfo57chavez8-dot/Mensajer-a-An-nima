@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Dashboard — Mensajería Anónima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div id="loading" class="full-loading"><div class="loading-spinner"></div></div>
+
+<div class="app-shell" id="content" style="display:none;">
+  <div class="topbar">
+    <div class="brand"><span class="brand-mark">MA</span>Mensajería Anónima</div>
+    <div class="avatar" id="topbar-avatar" style="width:36px;height:36px;font-size:13px;"></div>
+  </div>
+
+  <h2 style="margin-bottom:2px;" id="greeting-name">Hola</h2>
+  <p id="greeting-username" style="margin-bottom:20px;">@usuario</p>
+
+  <div id="link" class="link-card">
+    <div class="link-card-inner">
+      <div class="link-card-label">Tu enlace personal</div>
+      <div class="link-card-url" id="personal-link">mensajeriaanonima.app/u/usuario</div>
+      <div class="link-card-actions">
+        <button class="btn btn-secondary btn-sm" id="copy-link-btn">Copiar enlace</button>
+        <button class="btn btn-primary btn-sm" id="share-link-btn">Compartir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="num" id="stat-total">0</div>
+      <div class="lbl">Mensajes recibidos</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="stat-unread">0</div>
+      <div class="lbl">No leídos</div>
+    </div>
+  </div>
+
+  <div class="section-title">Actividad reciente</div>
+  <div id="activity-list"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>
